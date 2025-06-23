@@ -40,7 +40,7 @@ class AuthorController extends Controller
             'name'=> $request->name
         ]);
 
-        return redirect()->route('authors,index')->withSuccess('New author added successfully');
+        return redirect()->route('authors.index')->withSuccess('New author added successfully');
     }
 
     /**
