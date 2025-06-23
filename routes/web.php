@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthorController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('authors.index')); 
 });
+
+route::resource('authors', AuthorController::class);
