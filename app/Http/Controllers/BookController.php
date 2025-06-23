@@ -6,6 +6,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use Illuminate\View\View;
+use App\Models\Author;
+use App\Models\Genre;
 
 class BookController extends Controller
 {
@@ -22,9 +24,12 @@ class BookController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        return view('books.create');
+        return view('books.create', [
+            'authors' => Author::all(),
+            'genres' => Genre::all(),
+        ]);
     }
 
     /**
@@ -33,14 +38,19 @@ class BookController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'title'=> 'required',
-            'author_id' => 'required',
+            'title' => 'required',
+            'author_id' => 'required|exists:authors,id',
+            'genres' => 'required|array',
+            'genres.*' => 'exists:genres,id',
         ]);
+
 
         $book = Book::create([
             'title'=> $request->title,
             'author_id'=> $request->author_id,
         ]);
+
+        $book->genres()->attach($request->genres);
 
         return redirect()->route('books.index')->withSuccess('New book added successfully');
     }
@@ -57,9 +67,14 @@ class BookController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Book $book): View
-    {
-        return view('books.edit', compact('book'));
-    }
+{
+    return view('books.edit', [
+        'book' => $book,
+        'authors' => Author::all(),
+        'genres' => Genre::all(),
+    ]);
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -67,16 +82,20 @@ class BookController extends Controller
     public function update(Request $request, Book $book): RedirectResponse
     {
         $request->validate([
-            'title'=> 'required',
-            'author_id' => 'required',
-        ]);
+        'title' => 'required',
+        'author_id' => 'required|exists:authors,id',
+        'genres' => 'required|array',
+        'genres.*' => 'exists:genres,id',
+    ]);
 
-        $book->update([
-            'title'=> $request->title,
-            'author_id'=> $request->author_id,
-        ]);
+    $book->update([
+        'title' => $request->title,
+        'author_id' => $request->author_id,
+    ]);
 
-        return redirect()->back()->withSuccess('Book is updated successfully');
+    $book->genres()->sync($request->genres);
+
+    return redirect()->route('books.index')->withSuccess('Book updated successfully');
     }
 
     /**
