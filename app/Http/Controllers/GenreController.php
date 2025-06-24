@@ -40,7 +40,7 @@ class GenreController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('genres.index')->withSuccess('New genre added successfully');
+        return redirect()->back()->withSuccess('New genre added successfully');
     }
 
     /**
@@ -82,6 +82,6 @@ class GenreController extends Controller
     {
         $genre->delete();
 
-        return redirect()->route('genres.index')->withSuccess('Genre deleted successfully');
+        return redirect()->back()->withSuccess('Genre deleted successfully');
     }
 }

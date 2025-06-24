@@ -17,7 +17,7 @@ class BookController extends Controller
     public function index(): View
     {
         return view("books.index", [
-            'books' => Book::latest()->paginate(3),
+            'books' => Book::latest()->paginate(5),
         ]);
     }
 
@@ -28,7 +28,7 @@ class BookController extends Controller
     {
         return view('books.create', [
             'authors' => Author::all(),
-            'genres' => Genre::all(),
+            'genres' => Genre::orderBy('name')->get(),
             'selectedAuthor' => $selectedAuthor,
         ]);
     }

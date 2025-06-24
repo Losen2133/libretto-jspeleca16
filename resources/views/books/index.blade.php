@@ -28,7 +28,7 @@
                             <td>{{ $book->author->name }}</td>
                             <td>
                                 @foreach ($book->genres as $genre)
-                                    {{ $genre->name }}{{ !$loop->last ? ', ' : '' }}
+                                    <span class="badge bg-secondary">{{ $genre->name }}</span>
                                 @endforeach
                             </td>
                             <td class="text-center">{{ $book->reviews->count() }}</td>
