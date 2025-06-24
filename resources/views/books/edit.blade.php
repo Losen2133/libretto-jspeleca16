@@ -8,6 +8,11 @@
         <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
     </div>
     <div class="card-body">
+        @if(session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="d-flex justify-content-center align-items-center">
 
             <form action="{{ route('books.update', $book->id) }}" method="POST" class="w-50">

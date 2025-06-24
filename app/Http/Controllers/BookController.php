@@ -17,18 +17,19 @@ class BookController extends Controller
     public function index(): View
     {
         return view("books.index", [
-            'books' => Book::latest()->paginate(5),
+            'books' => Book::latest()->paginate(3),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(Author $selectedAuthor): View
     {
         return view('books.create', [
             'authors' => Author::all(),
             'genres' => Genre::all(),
+            'selectedAuthor' => $selectedAuthor,
         ]);
     }
 
@@ -52,6 +53,10 @@ class BookController extends Controller
 
         $book->genres()->attach($request->genres);
 
+        if($request->has('from')) {
+            return redirect($request->input('from'))->withSuccess('New book added successfully');
+        }
+
         return redirect()->route('books.index')->withSuccess('New book added successfully');
     }
 
@@ -60,7 +65,8 @@ class BookController extends Controller
      */
     public function show(Book $book): View
     {
-        return view('books.show', compact('book'));
+        $reviews = $book->reviews()->latest()->paginate(1);
+        return view('books.show', compact('book', 'reviews'));
     }
 
     /**
@@ -95,7 +101,7 @@ class BookController extends Controller
 
     $book->genres()->sync($request->genres);
 
-    return redirect()->route('books.index')->withSuccess('Book updated successfully');
+    return redirect()->back()->withSuccess('Book updated successfully');
     }
 
     /**

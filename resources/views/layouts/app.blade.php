@@ -10,9 +10,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
-    <div class="d-flex justify-content-between align-items-center mt-3">
-        <h3 class="mb-0">Libretto</h3>
-    </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">LIBRETTO</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('books.*') ? 'active disabled' : '' }}"
+                    href="{{ request()->routeIs('books.*') ? '#' : route('books.index') }}">
+                        Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('authors.*') ? 'active disabled' : '' }}"
+                    href="{{ request()->routeIs('authors.*') ? '#' : route('authors.index') }}">
+                        Authors
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 
     @yield('content')
 

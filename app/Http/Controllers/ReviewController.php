@@ -33,16 +33,18 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'book_id' => 'required|exists:books,id',    
             'content' => 'required',
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
         Review::create([
+            'book_id' => $request->book_id,
             'content' => $request->content,
             'rating' => $request->rating,
         ]);
 
-        return redirect()->route('reviews.index')->withSuccess('New review added successfully');
+        return redirect()->back()->withSuccess('New review added successfully');
     }
 
     /**
@@ -67,16 +69,18 @@ class ReviewController extends Controller
     public function update(Request $request, Review $review): RedirectResponse
     {
         $request->validate([
+            'book_id' => 'required|exists:books,id', 
             'content' => 'required',
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
         $review->update([
+            'book_id' => $request->book_id,
             'content' => $request->content,
             'rating' => $request->rating,
         ]);
 
-        return redirect()->route('reviews.index')->withSuccess('Review updated successfully');
+        return redirect()->back()->withSuccess('Review updated successfully');
     }
 
     /**
@@ -86,6 +90,6 @@ class ReviewController extends Controller
     {
         $review->delete();
 
-        return redirect()->route('reviews.index')->withSuccess('Review deleted successfully');
+        return redirect()->back()->withSuccess('Review deleted successfully');
     }
 }

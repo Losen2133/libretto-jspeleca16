@@ -34,17 +34,17 @@
                             <td class="text-center">{{ $book->reviews->count() }}</td>
                             <td class="text-center">
                                 <a href="{{ route('books.show', $book->id) }}" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-eye"></i> Show
+                                    <i class="bi bi-eye"></i>
                                 </a>
                                 <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-pencil-square"></i> Edit
+                                    <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"
                                         onclick="return confirm('Do you want to delete this book?');">
-                                        <i class="bi bi-trash"></i> Delete
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
                             </td>
