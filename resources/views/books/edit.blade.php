@@ -60,6 +60,10 @@
                     @error('genres')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
+
+                    <button type="button" class="btn btn-sm btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#genreModal">
+                        Manage Genres
+                    </button>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Book</button>
@@ -68,5 +72,16 @@
         </div>
     </div>
 </div>
+
+@include('books.partials.create-genre-modal')
+
+@if ($errors->has('name'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const genreModal = new bootstrap.Modal(document.getElementById('genreModal'));
+            genreModal.show();
+        });
+    </script>
+@endif
 
 @endsection

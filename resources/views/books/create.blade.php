@@ -4,15 +4,14 @@
 <div class="card m-5">
     <div class="card-header d-flex justify-content-between align-items-center">
         <span>Add New Book</span>
+        <a href="{{ session('previous-route') }}" class="btn btn-primary btn-sm">&larr; Back</a>
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center align-items-center">
 
-            <!-- ✅ BOOK FORM -->
             <form action="{{ route('books.store') }}" method="POST" class="w-50">
                 @csrf
 
-                <!-- Title -->
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <div class="form-text">Provide the title of the book</div>
@@ -22,7 +21,6 @@
                     @enderror
                 </div>
 
-                <!-- Author -->
                 <div class="mb-3">
                     <label for="author_id" class="form-label">Author</label>
                     <div class="form-text">Select the author of the book.</div>
@@ -40,7 +38,6 @@
                     @enderror
                 </div>
 
-                <!-- Genres -->
                 <div class="mb-3">
                     <label for="genres[]" class="form-label">Genres</label>
                     <div class="form-text">Select the genres of the book.</div>
@@ -55,7 +52,6 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
 
-                    <!-- Modal trigger -->
                     <button type="button" class="btn btn-sm btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#genreModal">
                         Manage Genres
                     </button>

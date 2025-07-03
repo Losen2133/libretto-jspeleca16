@@ -42,17 +42,22 @@
                                         @endif
                                     @endfor
                                 </span>
-                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Do you want to delete this review?');">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                                <span>
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editReviewModal"><i class="bi bi-pencil-square"></i></button>
+                                    <form action="{{ route('reviews.destroy', $review) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Do you want to delete this review?');">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </span>
+                                
                             </div>
                             {{ $review->content }}
                         </li>
+                        @include('books.partials.edit-review-modal')
                     @endforeach
                 </ul>
                 {{ $reviews->links() }}

@@ -8,6 +8,7 @@ use App\Models\Book;
 use Illuminate\View\View;
 use App\Models\Author;
 use App\Models\Genre;
+use Illuminate\Support\Facades\Route;
 
 class BookController extends Controller
 {
@@ -25,7 +26,8 @@ class BookController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(Author $selectedAuthor): View
-    {
+    {   
+        session(['previous-route' => url()->previous()]);
         return view('books.create', [
             'authors' => Author::all(),
             'genres' => Genre::orderBy('name')->get(),
@@ -38,6 +40,7 @@ class BookController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $previousRoute = session('previous-route');
         $request->validate([
             'title' => 'required',
             'author_id' => 'required|exists:authors,id',
@@ -53,11 +56,7 @@ class BookController extends Controller
 
         $book->genres()->attach($request->genres);
 
-        if($request->has('from')) {
-            return redirect($request->input('from'))->withSuccess('New book added successfully');
-        }
-
-        return redirect()->route('books.index')->withSuccess('New book added successfully');
+        return redirect($previousRoute)->withSuccess('New book added successfully');
     }
 
     /**

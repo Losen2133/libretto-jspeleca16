@@ -14,7 +14,7 @@
 
                     <div class="mb-3">
                         <label for="rating" class="form-label">Rating (1-5)</label>
-                        <select name="rating" id="rating" class="form-select" required>
+                        <select name="rating" id="rating" class="form-select">
                             <option value="" disabled selected>-- Select Rating --</option>
                             @for ($i = 1; $i <= 5; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -25,7 +25,7 @@
                     {{-- Review Content --}}
                     <div class="mb-3">
                         <label for="content" class="form-label">Review</label>
-                        <textarea name="content" id="content" class="form-control" rows="4" required></textarea>
+                        <textarea name="content" id="content" class="form-control" rows="4"></textarea>
                     </div>
                 </div>
 
